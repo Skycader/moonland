@@ -33,7 +33,19 @@ export class AppComponent {
   public mouseMove(event: any) {
     clearTimeout(this.mi);
 
+    const func = (item: any) => {
+      if (
+        Math.abs(item.offsetLeft - event.offsetX) > 3000 &&
+        Math.abs(item.offsetTop - event.offsetY) > 3000
+      )
+        item.remove();
+    };
     this.mi = setTimeout(() => {
+      try {
+        if (this.isFocused) return;
+        this.world.nativeElement.querySelectorAll('.message').forEach(func);
+      } catch (e) {}
+
       if (!this.isFocused) this.getCurrentCoordinates(event);
     }, 300);
   }
@@ -42,12 +54,6 @@ export class AppComponent {
     const left = event.offsetX;
     const top = event.offsetY;
     let elem = this.world.nativeElement;
-    try {
-      if (this.isFocused) return;
-      this.world.nativeElement
-        .querySelectorAll('.message')
-        .forEach((item: any) => item.remove());
-    } catch (e) {}
 
     const instance = this.panzoom;
     let isFocused = this.isFocused;
@@ -98,8 +104,8 @@ export class AppComponent {
     // Usage:
     // add it for 5 seconds in the document
 
-    for (let i = -50; i < 51; i++) {
-      for (let j = -50; j < 51; j++) {
+    for (let i = -25; i < 25; i++) {
+      for (let j = -25; j < 25; j++) {
         let message = createMessageUnder(elem, i, j);
         if (message) this.world.nativeElement.append(message);
       }
