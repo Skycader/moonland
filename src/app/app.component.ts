@@ -41,8 +41,11 @@ export class AppComponent {
       // assign coordinates, don't forget "px"!
       let coords = elem.getBoundingClientRect();
 
-      message.style.left = left + 'px';
-      message.style.top = top + 'px';
+      message.style.left = ((left / 200) | 0) * 200 + 'px';
+      message.style.top = ((top / 200) | 0) * 200 + 'px';
+      message.style.width = '200px';
+      message.style.height = '200px';
+      message.style.border = '2px solid red';
 
       message.innerHTML = html;
 
@@ -51,7 +54,10 @@ export class AppComponent {
 
     // Usage:
     // add it for 5 seconds in the document
-    let message = createMessageUnder(elem, `${left},${top}`);
+    let message = createMessageUnder(
+      elem,
+      `${((left / 200) | 0) * 200},${((top / 200) | 0) * 200}`
+    );
 
     this.world.nativeElement.append(message);
   }
