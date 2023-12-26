@@ -23,6 +23,7 @@ export class AppComponent {
   }
 
   public getCurrentCoordinates(event: MouseEvent) {
+    event.preventDefault();
     console.log(event.offsetX, event.offsetY);
     const left = event.offsetX;
     const top = event.offsetY;
@@ -30,24 +31,29 @@ export class AppComponent {
     try {
       this.world.nativeElement.querySelector('.message').remove();
     } catch (e) {}
+
+    const instance = this.panzoom;
     function createMessageUnder(elem: any, html: any) {
       // create message element
 
-      let message = document.createElement('div');
+      let message = document.createElement('textarea');
       // better to use a css class for the style here
-      message.style.cssText = 'position:absolute; color: red';
+      message.style.cssText = 'position:absolute; color: black; font-size: 5px';
       message.classList.add('message');
-
-      // assign coordinates, don't forget "px"!
-      let coords = elem.getBoundingClientRect();
 
       message.style.left = ((left / 200) | 0) * 200 + 'px';
       message.style.top = ((top / 200) | 0) * 200 + 'px';
       message.style.width = '200px';
       message.style.height = '200px';
-      message.style.border = '2px solid red';
+      message.style.border = '1px dotted black';
+      message.style.padding = '52px';
+      message.style.background = 'transparent';
 
-      message.innerHTML = html;
+      message.addEventListener('click', (e) => {
+        document.querySelector('textarea')?.focus();
+      });
+
+      // message.innerHTML = html;
 
       return message;
     }
