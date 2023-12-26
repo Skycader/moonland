@@ -83,7 +83,7 @@ export class AppComponent {
         isFocused = true;
       });
 
-      message.addEventListener('contextmenu', () => {
+      message.addEventListener('mouseleave', () => {
         isFocused = false;
       });
 
