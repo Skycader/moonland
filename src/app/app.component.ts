@@ -34,11 +34,7 @@ export class AppComponent {
     clearTimeout(this.mi);
 
     const func = (item: any) => {
-      if (
-        Math.abs(item.offsetLeft - event.offsetX) > 3000 &&
-        Math.abs(item.offsetTop - event.offsetY) > 3000
-      )
-        item.remove();
+      item.remove();
     };
     this.mi = setTimeout(() => {
       try {
