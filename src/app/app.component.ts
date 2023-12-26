@@ -19,9 +19,9 @@ export class AppComponent {
       minScale: 0.02,
     });
 
-    // document.querySelector('body')?.addEventListener('touchend', () => {
-    //   this.panzoom.pause();
-    // });
+    document.querySelector('body')?.addEventListener('touchend', () => {
+      this.panzoom.pause();
+    });
 
     elem.parentElement.addEventListener('wheel', this.panzoom.zoomWithWheel);
   }
