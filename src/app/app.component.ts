@@ -13,7 +13,9 @@ export class AppComponent {
 
   ngAfterViewInit() {
     const elem: any = this.world.nativeElement;
-
+    this.world.nativeElement.addEventListener('touchmove', (event: any) =>
+      this.mouseMove(event)
+    );
     this.panzoom = Panzoom(elem, {
       maxScale: 100,
       minScale: 0.02,
@@ -26,12 +28,14 @@ export class AppComponent {
     elem.parentElement.addEventListener('wheel', this.panzoom.zoomWithWheel);
   }
 
+  public isFocused: boolean = false;
   public mi: any;
   public mouseMove(event: any) {
     clearTimeout(this.mi);
+
     this.mi = setTimeout(() => {
-      this.getCurrentCoordinates(event);
-    }, 500);
+      if (!this.isFocused) this.getCurrentCoordinates(event);
+    }, 300);
   }
   public getCurrentCoordinates(event: any) {
     event.preventDefault();
@@ -39,12 +43,14 @@ export class AppComponent {
     const top = event.offsetY;
     let elem = this.world.nativeElement;
     try {
+      if (this.isFocused) return;
       this.world.nativeElement
         .querySelectorAll('.message')
         .forEach((item: any) => item.remove());
     } catch (e) {}
 
     const instance = this.panzoom;
+    let isFocused = this.isFocused;
     function createMessageUnder(elem: any, x: number = 0, y: number = 0) {
       // create message element
 
@@ -72,6 +78,18 @@ export class AppComponent {
       message.style.background = 'transparent';
       message.value = localStorage.getItem(JSON.stringify(coords)) || '';
 
+      message.addEventListener('click', () => {
+        message.focus();
+        isFocused = true;
+      });
+
+      message.addEventListener('mouseleave', () => {
+        isFocused = false;
+      });
+
+      message.addEventListener('change', () => {
+        localStorage.setItem(JSON.stringify(coords), message.value);
+      });
       // message.innerHTML = html;
 
       return message;
