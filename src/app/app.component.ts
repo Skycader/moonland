@@ -53,7 +53,7 @@ export class AppComponent {
     let isFocused = this.isFocused;
     function createMessageUnder(elem: any, x: number = 0, y: number = 0) {
       // create message element
-
+      if (isFocused) return;
       let message = document.createElement('textarea');
       // better to use a css class for the style here
       message.style.cssText = 'position:absolute; color: black; font-size: 5px';
@@ -83,7 +83,7 @@ export class AppComponent {
         isFocused = true;
       });
 
-      message.addEventListener('mouseleave', () => {
+      message.addEventListener('contextmenu', () => {
         isFocused = false;
       });
 
