@@ -8,3 +8,9 @@ html {
 * {
   box-sizing: border-box;
 }
+
+textarea {
+  outline: none !important;
+  resize: none;
+  overflow: hidden;
+}
