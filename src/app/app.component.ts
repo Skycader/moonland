@@ -19,6 +19,10 @@ export class AppComponent {
       minScale: 0.02,
     });
 
+    document.querySelector('body')?.addEventListener('touchend', () => {
+      this.panzoom.pause();
+    });
+
     elem.parentElement.addEventListener('wheel', this.panzoom.zoomWithWheel);
   }
 
@@ -43,14 +47,39 @@ export class AppComponent {
 
       message.style.left = ((left / 200) | 0) * 200 + 'px';
       message.style.top = ((top / 200) | 0) * 200 + 'px';
+      const coords = {
+        left: message.style.left,
+        top: message.style.top,
+      };
       message.style.width = '200px';
       message.style.height = '200px';
       message.style.border = '1px dotted black';
       message.style.padding = '52px';
       message.style.background = 'transparent';
 
-      message.addEventListener('click', (e) => {
+      message.addEventListener('mouseenter', (e) => {
         document.querySelector('textarea')?.focus();
+        document.querySelector('textarea')!.value =
+          localStorage.getItem(JSON.stringify(coords)) || '';
+      });
+
+      message.addEventListener('touchmove', (e) => {
+        document.querySelector('textarea')?.focus();
+        document.querySelector('textarea')!.value =
+          localStorage.getItem(JSON.stringify(coords)) || '';
+      });
+
+      message.addEventListener('touchstart', (e) => {
+        document.querySelector('textarea')?.focus();
+        document.querySelector('textarea')!.value =
+          localStorage.getItem(JSON.stringify(coords)) || '';
+      });
+
+      message.addEventListener('change', () => {
+        localStorage.setItem(
+          JSON.stringify(coords),
+          document.querySelector('textarea')!.value
+        );
       });
 
       // message.innerHTML = html;
