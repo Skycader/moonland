@@ -13,8 +13,12 @@ export class AppComponent {
 
   ngAfterViewInit() {
     const elem: any = this.world.nativeElement;
+
+    elem.addEventListener('mousemove', (event: any) => {
+      this.mouseMove(event);
+    });
     this.world.nativeElement.addEventListener('touchmove', (event: any) =>
-      this.mouseMove(event)
+      this.mouseMove(event),
     );
     this.panzoom = Panzoom(elem, {
       maxScale: 100,
@@ -45,9 +49,13 @@ export class AppComponent {
       if (!this.isFocused) this.getCurrentCoordinates(event);
     }, 300);
   }
+
+  public left = 0;
+
   public getCurrentCoordinates(event: any) {
     event.preventDefault();
     const left = event.offsetX;
+    this.left = left;
     const top = event.offsetY;
     let elem = this.world.nativeElement;
 
