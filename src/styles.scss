@@ -13,5 +13,17 @@ textarea {
   outline: none !important;
   resize: none;
   overflow: hidden;
+}
+
+.no-edit {
+  textarea {
+    pointer-events: none;
+  }
+}
+
+.no-move {
   pointer-events: none;
+  textarea {
+    pointer-events: all;
+  }
 }

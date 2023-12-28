@@ -35,6 +35,7 @@ export class AppComponent {
   public isFocused: boolean = false;
   public mi: any;
   public mouseMove(event: any) {
+    if (this.edit) return;
     clearTimeout(this.mi);
 
     const func = (item: any) => {
@@ -126,5 +127,10 @@ export class AppComponent {
     this.panzoom.zoom(1);
 
     this.panzoom.pan(10, 10);
+  }
+
+  public edit: boolean = false;
+  public toggleEdit() {
+    this.edit = !this.edit;
   }
 }

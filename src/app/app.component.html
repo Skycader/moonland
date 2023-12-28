@@ -1,3 +1,4 @@
-<div class="world" #world></div>
+<div class="world" [class.no-move]="edit" [class.no-edit]="!edit" #world></div>
 
-<button class="teleport" (click)="teleport()">Teleport {{ left }}</button>
+<!-- <button class="teleport" (click)="teleport()">Teleport {{ left }}</button> -->
+<button class="teleport" (click)="toggleEdit()">Toggle edit{{ edit }}</button>
