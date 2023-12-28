@@ -18,7 +18,7 @@ export class AppComponent {
       this.mouseMove(event);
     });
     this.world.nativeElement.addEventListener('touchmove', (event: any) =>
-      this.mouseMove(event),
+      this.mouseMove(event)
     );
     this.panzoom = Panzoom(elem, {
       maxScale: 100,
@@ -108,11 +108,17 @@ export class AppComponent {
     // Usage:
     // add it for 5 seconds in the document
 
-    for (let i = -25; i < 25; i++) {
-      for (let j = -25; j < 25; j++) {
+    const chunk = 10;
+    const gotNotes = [];
+    for (let i = -chunk / 2; i < chunk / 2; i++) {
+      for (let j = -chunk / 2; j < chunk / 2; j++) {
         let message = createMessageUnder(elem, i, j);
-        if (message) this.world.nativeElement.append(message);
+        gotNotes.push(message);
       }
+    }
+
+    for (let note of gotNotes) {
+      if (note) this.world.nativeElement.append(note);
     }
   }
 
